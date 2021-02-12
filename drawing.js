@@ -2,7 +2,6 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 let mouseDown = false;
 
-let zoomLevel = 1;
 let cameraWidth = 20;
 let cameraHeight;
 let cameraX = 0;
@@ -37,10 +36,10 @@ function createTransform() {
     const hCameraHeight = cameraHeight / 2;
 
     return {
-        left: cameraX - hCameraWidth * zoomLevel,
-        right: cameraX + hCameraWidth * zoomLevel,
-        top: cameraY + hCameraHeight * zoomLevel,
-        bottom: cameraY - hCameraHeight * zoomLevel
+        left: cameraX - hCameraWidth,
+        right: cameraX + hCameraWidth,
+        top: cameraY + hCameraHeight,
+        bottom: cameraY - hCameraHeight
     };
 }
 
@@ -65,14 +64,59 @@ function draw() {
     const origin = transformPoint(transform, {x: 0, y: 0});
 
     // draw axis
+    
+
+    // calculate interval of axis markers
+    let numDigitsX = Math.floor(Math.log(cameraWidth) / Math.log(10));
+    let axisDigitsX = numDigitsX - 1; //  atleast 10 markers in total on the x-axis 
+    let inc = Math.pow(10, axisDigitsX);
+
+    ctx.font = "15px Comic Sans MS";
+    ctx.fillStyle = "rgb(0, 0, 0)";
+    // round left and bottom side to nearest marker
+    const halfMarkerSize = 8;
+    let bottomStart = Math.round(transform.bottom / inc) * inc;
+    let leftStart = Math.round(transform.left / inc) * inc;
+    for(let x = leftStart; x < transform.right; x += inc) {
+        ctx.beginPath();
+        const p = transformPoint(transform, {x: x, y: 0});
+        ctx.strokeStyle = "rgb(200, 200, 200)";
+        ctx.moveTo(p.x, origin.y - halfMarkerSize);
+        ctx.lineTo(p.x, origin.y + halfMarkerSize);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgb(200, 200, 200)";
+        ctx.beginPath();
+        ctx.moveTo(p.x, 0);
+        ctx.lineTo(p.x, height);
+        ctx.stroke();
+
+        ctx.fillText("" + x.toFixed(2), p.x, p.y + halfMarkerSize * 2);        
+    }
+
+    for(let y = bottomStart; y < transform.top; y += inc) {
+        const p = transformPoint(transform, {x: 0, y: y});
+        ctx.beginPath();
+        ctx.strokeStyle = "rgb(200, 200, 200)";
+        ctx.moveTo(origin.x - halfMarkerSize, p.y);
+        ctx.lineTo(origin.x + halfMarkerSize, p.y);
+        ctx.stroke();
+        ctx.strokeStyle = "rgb(200, 200, 200)";
+        ctx.moveTo(0, p.y);
+        ctx.lineTo(width, p.y);
+        ctx.stroke();
+
+        ctx.fillText("" + y.toFixed(2), origin.x - halfMarkerSize * 6, p.y);
+    }
+    
     ctx.lineWidth = 4;
-    ctx.fillStyle = "rgb(51, 255, 51)";
+    ctx.strokeStyle = "rgb(51, 51, 51)";
+    ctx.beginPath();
     ctx.moveTo(origin.x, height);
     ctx.lineTo(origin.x, 0);
     ctx.moveTo(0, origin.y);
     ctx.lineTo(width, origin.y);
     ctx.stroke();
-
 }
 
 canvas.addEventListener("wheel", (event) => {
@@ -82,7 +126,7 @@ canvas.addEventListener("wheel", (event) => {
         scale = 1.1;
     else
         scale = 0.9;
-    zoomLevel *= scale;
+    cameraWidth *= scale;
     draw();
 });
 
