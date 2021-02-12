@@ -108,11 +108,6 @@ canvas.addEventListener("mousemove", (event) => {
 });
 
 
-canvas.addEventListener("drag", (event) => {
-    console.log(event);
-});
-
-
 canvas.addEventListener("mousedown", () => {
     mouseDown = true;
 });
@@ -120,4 +115,5 @@ canvas.addEventListener("mousedown", () => {
 canvas.addEventListener("mouseup", () => {
     mouseDown = false;
 });
+
 draw();
