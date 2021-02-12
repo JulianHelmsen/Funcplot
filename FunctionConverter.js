@@ -3,6 +3,12 @@ function convertToFunction(funcText){
     funcText = funcText.replaceAll("sin", "Math.sin");
     funcText = funcText.replaceAll("cos", "Math.cos");
     funcText = funcText.replaceAll("tan", "Math.tan");
+    funcText = funcText.replaceAll("round", "Math.round");
+	funcText = funcText.replaceAll("floor", "Math.floor");
+	funcText = funcText.replaceAll("ceil", "Math.ceil");
+	funcText = funcText.replaceAll("pi", "Math.PI");
+	funcText = funcText.replaceAll("e", "Math.E");
+	funcText = funcText.replaceAll("log", "Math.log");
     return funcText;
 
 }
