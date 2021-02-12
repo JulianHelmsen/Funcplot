@@ -7,7 +7,7 @@ let cameraHeight;
 let cameraX = 0;
 let cameraY = 0;
 
-let f = new Expression("x * x * cos(x)");
+let f = new Expression("2 * x * x + 1*x + 0.5*x*x*x");
 
 function drawFunc(ctx, transform, f) {
     
@@ -134,6 +134,12 @@ function draw() {
     ctx.stroke();
 
     drawFunc(ctx, transform, f);
+}
+
+function funcChanged() {
+    let expr = document.getElementById("expression").value;
+    f = new Expression(expr);
+    draw();
 }
 
 canvas.addEventListener("wheel", (event) => {
