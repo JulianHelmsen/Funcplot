@@ -6,7 +6,6 @@ let cameraWidth = 20;
 let cameraHeight;
 let cameraX = 0;
 let cameraY = 0;
-let projectionMatrix = new Array(4 * 4);
 
 let displayedFunc = (x) => Math.sin(x);
 
