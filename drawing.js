@@ -8,6 +8,24 @@ let cameraX = 0;
 let cameraY = 0;
 let projectionMatrix = new Array(4 * 4);
 
+let displayedFunc = (x) => Math.sin(x);
+
+function drawFunc(ctx, transform, f) {
+    
+    ctx.beginPath();
+    ctx.strokeStyle = "rgb(255, 0, 0)";
+    const w = transform.right - transform.left;
+    
+    let prev = transformPoint(transform, {x: transform.left, y: f(transform.left)});
+    ctx.moveTo(prev.x, prev.y);
+    for(let x = transform.left; x < transform.right; x += w * 0.005) {
+        let p = transformPoint(transform, {x: x, y: f(x)});
+        ctx.lineTo(p.x, p.y);
+    }
+
+    ctx.stroke();
+}
+
 function transformPoint(transform, point) {
     const w = transform.right - transform.left;
     const h = transform.top - transform.bottom;
@@ -63,8 +81,6 @@ function draw() {
     const transform = createTransform();
     const origin = transformPoint(transform, {x: 0, y: 0});
 
-    
-
     // calculate interval of axis markers
     let numDigitsX = Math.floor(Math.log(cameraWidth) / Math.log(10));
     let axisDigitsX = numDigitsX - 1; //  atleast 10 markers in total on the x-axis 
@@ -117,6 +133,8 @@ function draw() {
     ctx.moveTo(0, origin.y);
     ctx.lineTo(width, origin.y);
     ctx.stroke();
+
+    drawFunc(ctx, transform, displayedFunc);
 }
 
 canvas.addEventListener("wheel", (event) => {
