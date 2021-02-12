@@ -63,7 +63,6 @@ function draw() {
     const transform = createTransform();
     const origin = transformPoint(transform, {x: 0, y: 0});
 
-    // draw axis
     
 
     // calculate interval of axis markers
@@ -109,6 +108,7 @@ function draw() {
         ctx.fillText("" + y.toFixed(2), origin.x - halfMarkerSize * 6, p.y);
     }
     
+    // draw axis
     ctx.lineWidth = 4;
     ctx.strokeStyle = "rgb(51, 51, 51)";
     ctx.beginPath();
