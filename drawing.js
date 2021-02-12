@@ -17,7 +17,8 @@ function drawFunc(ctx, transform, f) {
     
     let prev = transformPoint(transform, {x: transform.left, y: f.evaluate(transform.left)});
     ctx.moveTo(prev.x, prev.y);
-    for(let x = transform.left; x < transform.right; x += w * 0.005) {
+    const stopRight = transform.right + w * 0.005;
+    for(let x = transform.left; x <= stopRight; x += w * 0.005) {
         let p = transformPoint(transform, {x: x, y: f.evaluate(x)});
         ctx.lineTo(p.x, p.y);
     }
