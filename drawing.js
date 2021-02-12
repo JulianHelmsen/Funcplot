@@ -7,7 +7,7 @@ let cameraHeight;
 let cameraX = 0;
 let cameraY = 0;
 
-let displayedFunc = (x) => Math.sin(x);
+let f = new Expression("x * x * cos(x)");
 
 function drawFunc(ctx, transform, f) {
     
@@ -15,10 +15,10 @@ function drawFunc(ctx, transform, f) {
     ctx.strokeStyle = "rgb(255, 0, 0)";
     const w = transform.right - transform.left;
     
-    let prev = transformPoint(transform, {x: transform.left, y: f(transform.left)});
+    let prev = transformPoint(transform, {x: transform.left, y: f.evaluate(transform.left)});
     ctx.moveTo(prev.x, prev.y);
     for(let x = transform.left; x < transform.right; x += w * 0.005) {
-        let p = transformPoint(transform, {x: x, y: f(x)});
+        let p = transformPoint(transform, {x: x, y: f.evaluate(x)});
         ctx.lineTo(p.x, p.y);
     }
 
@@ -133,7 +133,7 @@ function draw() {
     ctx.lineTo(width, origin.y);
     ctx.stroke();
 
-    drawFunc(ctx, transform, displayedFunc);
+    drawFunc(ctx, transform, f);
 }
 
 canvas.addEventListener("wheel", (event) => {

@@ -7,29 +7,15 @@ function convertToFunction(funcText){
 
 }
 
-function calculateFunction(xmin, xmax, funcText){
-	let xdelta = xmax - xmin;
-	let point = {x:0, y:0};
-	let pointList = {point, };
-	
-	let xValue = 0.0;
-	let precision = 1000;
-	
-	for(let i = 0; i < precision; i++ ){
-		
-		xValue = i * xdelta / precision + xmin;
-		yValue = convertToFunction(funcText).replaceAll("x", xValue);
-		
-		point.x = xValue;
-		point.y = eval(yValue);
-	
+function Expression(expression) {
+	this.expression = convertToFunction(expression);
 
-		pointList[i] = point;
-		window.alert(pointList[i].x + "/" + pointList[i].y);
+	this.evaluate = function(x) {
+		let expression = this.expression.replaceAll("x", "" + x);
+		return eval(expression);
 	}
-	
-	return pointList;
 }
+
 
 function testConverter(funcText){
 	
