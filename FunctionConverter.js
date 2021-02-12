@@ -1,5 +1,6 @@
 
 
+<<<<<<< HEAD
 function convertToFunction(xValue, funcText){
 	let y = funcText;
 	
@@ -23,11 +24,22 @@ function convertToFunction(xValue, funcText){
 	
 	
 	return eval(y);
+=======
+function convertToFunction(funcText){
+    funcText = funcText.replaceAll("sin", "Math.sin");
+    funcText = funcText.replaceAll("cos", "Math.cos");
+    funcText = funcText.replaceAll("tan", "Math.tan");
+    return funcText;
+>>>>>>> b242bd9e40819a85adf301707643caccb140df2d
 }
 
 function testConverter(xValue, funcText){
 
+<<<<<<< HEAD
 	let y = eval (convertToFunction(xValue, funcText) );
+=======
+	let y = convertToFunction(funcText) ;
+>>>>>>> b242bd9e40819a85adf301707643caccb140df2d
 	
 	let p = document.getElementById("test");
 	p.innerHTML = y;
