@@ -86,7 +86,6 @@ canvas.addEventListener("wheel", (event) => {
     draw();
 });
 
-new ResizeObserver(draw).observe(canvas);
 
 canvas.addEventListener("mousemove", (event) => {
     // mouse move
@@ -102,8 +101,6 @@ canvas.addEventListener("mousemove", (event) => {
         cameraX -= newWorldPos.x - worldPos.x;
         cameraY -= newWorldPos.y - worldPos.y;
         draw();
-    }else{
-        // moved
     }
 });
 
@@ -116,4 +113,5 @@ canvas.addEventListener("mouseup", () => {
     mouseDown = false;
 });
 
+new ResizeObserver(draw).observe(canvas);
 draw();
