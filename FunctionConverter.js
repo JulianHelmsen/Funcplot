@@ -9,6 +9,7 @@ function convertToFunction(funcText){
 	funcText = funcText.replaceAll("pi", "Math.PI");
 	funcText = funcText.replaceAll("e", "Math.E");
 	funcText = funcText.replaceAll("log", "Math.log");
+	funcText = funcText.replaceAll("sqrt", "Math.sqrt");
     return funcText;
 
 }
